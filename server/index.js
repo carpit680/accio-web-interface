@@ -5,7 +5,7 @@ const express = require("express");
 const socketIo = require("socket.io");
 const http = require("http");
 const rclnodejs = require("rclnodejs");
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3005;
 
 const app = express();
 const server = http.createServer(app);
@@ -30,18 +30,25 @@ setInterval(() => {
 	io.to("clock-room").emit("time", new Date());
 }, 1000);
 
-rclnodejs.init().then(() => {
-	const node = rclnodejs.createNode("publisher_example_node");
-	const publisher = node.createPublisher("std_msgs/msg/String", "topic");
+rclnodejs
+	.init()
+	.then(() => {
+		const node = rclnodejs.createNode("robot_subscriber");
+		let count = 0;
 
-	let counter = 0;
-	setInterval(() => {
-		console.log(`Publishing message: Hello ROS ${counter}`);
-		publisher.publish(`Hello ROS ${counter++}`);
-	}, 1000);
+		node.createSubscription(
+			"accio_interfaces/msg/Robot",
+			"robot",
+			(state) => {
+				console.log(`Received message No. ${++count}: `, state);
+			}
+		);
 
-	rclnodejs.spin(node);
-});
+		rclnodejs.spin(node);
+	})
+	.catch((e) => {
+		console.log(e);
+	});
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../client/build")));
