@@ -1,29 +1,64 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 import "./App.css";
 import Plotter from "./components/plotter";
+import SimStart from "./components/simStart";
+
+// function App() {
+
+// 	const startSim = (e) => {
+// 		e.preventDefault();
+// 		socket.emit("sim:start", !start);
+// 		setStart(!start);
+// 	};
+// 	return (
+// 		<div className='App'>
+// 			<SimStart text={start ? "Stop" : "Start"} onClick={startSim} />
+// 			<Plotter />
+// 		</div>
+// 	);
+// }
+
+
+const socket = io();
 
 function App() {
-	const [time, setTime] = React.useState("fetching");
-	React.useEffect(() => {
-		const socket = io("http://localhost:3002");
-		socket.on("connect", () => console.log(socket.id));
-		socket.on("connect_error", () => {
-			setTimeout(() => socket.connect(), 5000);
-		});
-		socket.on("time", (data) => setTime(data));
-		socket.on("disconnect", () => setTime("server disconnected"));
-	}, []);
+	const [isConnected, setIsConnected] = useState(socket.connected);
+	const [start, setStart] = useState(false);
+	
 
-	return (
-		// <div className='App'>
-		// 	<header className='App-header'>
-		// 		<Plotter />
-		// 	</header>
-		// </div>
-		<div className='App'>{time}</div>
+  useEffect(() => {
+    socket.on('connect', () => {
+      setIsConnected(true);
+    });
+
+    socket.on('disconnect', () => {
+      setIsConnected(false);
+    });
+
+
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('pong');
+    };
+  }, []);
+
+  const startSim = (e) => {
+		e.preventDefault();
+		socket.emit("sim:start", !start);
+		setStart(!start);
+	};
+
+  return (
+		<div className='App'>
+			<p>Connected: {"" + isConnected}</p>
+			<SimStart text={start ? "Stop" : "Start"} onClick={startSim} />
+			<Plotter />
+		</div>
 	);
 }
 

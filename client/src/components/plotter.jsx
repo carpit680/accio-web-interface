@@ -10,12 +10,12 @@ import $ from "jquery";
 function Plotter() {
 	$(document).ready(function () {
 		const graph = document.getElementsByClassName("graph_img");
-		console.log(graph[0]);
+		// console.log(graph[0]);
 		const graphRect = graph[0].getBoundingClientRect();
-		console.log(graphRect);
-		const graphTop = graphRect.top;
+		// console.log(graphRect);
+		// const graphTop = graphRect.top;
 		const graphLeft = graphRect.left;
-		console.log(graphTop, graphLeft);
+		// console.log(graphTop, graphLeft);
 		const initialState = {
 			x: graphRect.left,
 			y: graphRect.top,
