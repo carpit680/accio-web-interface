@@ -1,7 +1,6 @@
 /** @format */
 
 import express from "express";
-import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
