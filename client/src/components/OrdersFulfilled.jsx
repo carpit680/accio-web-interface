@@ -1,27 +1,33 @@
-// create a list of orders that have been fulfilled
+/** @format */
 
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
-const OrdersFulfilled = () => {
-    const orders = useSelector((state) => state.ordersFulfilled);
-    // show "no completed orders" if there are no orders
-    if (orders.length === 0) {
-        return <div className="orders-fulfilled">No completed orders</div>;
-    }
-    else {
-    
-        return (
-            <div>
-                <h2>Orders Fulfilled</h2>
-                <ul>
-                    {orders.map((order) => (
-                        <li key={order.id}>{order.id}</li>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+const socket = io();
+
+function OrderFulfilled() {
+	const [orders, setFulfilled] = useState([]);
+
+	useEffect(() => {
+		socket.on("orders:fulfilled", (msg) => {
+			setFulfilled(msg);
+		});
+	}, []);
+
+	return (
+		<div>
+			<h1>Fulfilled Orders</h1>
+			<ul>
+				{orders.length > 0 ? (
+					orders.map((order) => {
+						return <li>{order.order_id}</li>;
+					})
+				) : (
+					<li>None</li>
+				)}
+			</ul>
+		</div>
+	);
 }
-    
-export default OrdersFulfilled;
+
+export default OrderFulfilled;
