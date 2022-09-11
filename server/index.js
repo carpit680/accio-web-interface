@@ -74,6 +74,7 @@ socketio.on("connection", (socket) => {
 		nodeSim.destroy();
 		nodeRobot.destroy();
 		nodePending.destroy();
+		nodeFulfilled.destroy();
 	});
 
 	startSimHandler(socketio, socket, sim_pub);
