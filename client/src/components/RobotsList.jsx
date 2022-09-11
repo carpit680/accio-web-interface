@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-
+import "./robotList.css";
 const socket = io();
 
 function RobotsList() {
@@ -22,17 +22,17 @@ function RobotsList() {
 	}, []);
 
 	return (
-		<div>
-			<h1>Online robots</h1>
+		<div className="robot-list">
+			<h1 className="list-heading">Online robots</h1>
 			<ul>
-				<li key={robot.robot_id}>
+				<li className="list-item" key={robot.robot_id}>
 					<h2>Robot {robot.robot_id}</h2>
 					<p>Available: {robot.available ? "Yes" : "No"}</p>
 				</li>
-				<li key={2}>
-					<h2>Demo robot 2</h2>
-					<p>Available: No</p>
-				</li>
+				{/* <li className="list-item" key={2}>
+					<h2></h2>
+					<p>Available: NA</p>
+				</li> */}
 			</ul>
 		</div>
 	);

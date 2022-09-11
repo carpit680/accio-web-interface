@@ -37,7 +37,7 @@ function Plotter() {
 	});
 
 	return (
-		<div >
+		<div className="plotter" >
 			<Graph />
 			<img className='pointer1' src={Pointer} alt='pointer' />
 		</div>

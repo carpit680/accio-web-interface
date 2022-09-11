@@ -1,0 +1,19 @@
+.console{
+    font-size: 12px;
+    height: 100%;
+    overflow: auto;
+    padding: 7px;
+    width: 100%;
+}
+.button{
+    background-color: #0E4F9B;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 4px!important;
+}
+
+.console-text{
+    padding: 2px;
+
+}

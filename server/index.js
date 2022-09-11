@@ -25,8 +25,8 @@ socketio.on("connection", (socket) => {
 
 	const nodeSim = new rclnodejs.Node("sim_starter");
 	const nodeRobot = new rclnodejs.Node("robot_subscriber");
-  const nodePending = new rclnodejs.Node("pending_subscriber");
-  const nodeFulfilled = new rclnodejs.Node("fulfilled_subscriber");
+	const nodePending = new rclnodejs.Node("pending_subscriber");
+	const nodeFulfilled = new rclnodejs.Node("fulfilled_subscriber");
 	const sim_pub = nodeSim.createPublisher(
 		"std_msgs/msg/Bool",
 		"start_simulation"
@@ -36,7 +36,7 @@ socketio.on("connection", (socket) => {
 		"accio_interfaces/msg/Robot",
 		"robot",
 		(msg) => {
-			console.log(msg);
+			// console.log(msg);
 			socket.emit("robot:state", msg);
 		}
 	);
@@ -45,18 +45,25 @@ socketio.on("connection", (socket) => {
 		"accio_interfaces/msg/Orders",
 		"orders_queued",
 		(msg) => {
-			console.log(msg);
-			socket.emit("orders:pending", msg);
+			var array = [];
+			for (var i = 0; i < msg.orders.length; i++) {
+				array.push(msg.orders[i]);
+			}
+			socket.emit("orders:pending", array);
 		}
 	);
-  const fulfilled_sub = nodeFulfilled.createSubscription(
-    "accio_interfaces/msg/Orders",
-    "orders_fulfilled",
-    (msg) => {
-      console.log(msg);
-      socket.emit("orders:fulfilled", msg);
-    }
-  );
+	const fulfilled_sub = nodeFulfilled.createSubscription(
+		"accio_interfaces/msg/Orders",
+		"orders_fulfilled",
+		(msg) => {
+			// convert msg to array
+			var array = [];
+			for (var i = 0; i < msg.orders.length; i++) {
+				array.push(msg.orders[i]);
+			}
+			socket.emit("orders:fulfilled", array);
+		}
+	);
 
 	rclnodejs.spin(nodeSim);
 	rclnodejs.spin(nodeRobot);
