@@ -36,7 +36,6 @@ socketio.on("connection", (socket) => {
 		"accio_interfaces/msg/Robot",
 		"robot",
 		(msg) => {
-			// console.log(msg);
 			socket.emit("robot:state", msg);
 		}
 	);
@@ -56,7 +55,6 @@ socketio.on("connection", (socket) => {
 		"accio_interfaces/msg/Orders",
 		"orders_fulfilled",
 		(msg) => {
-			// convert msg to array
 			var array = [];
 			for (var i = 0; i < msg.orders.length; i++) {
 				array.push(msg.orders[i]);
