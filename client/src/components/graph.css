@@ -1,14 +1,19 @@
 /** @format */
 
 .graph {
-	width: auto;
-	height: 70vh;
+	min-width: 45vw;
+	height: 60vh;
 	margin: auto;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	box-shadow: 0 0 10px 0 #5a5a5a80;
+	/* height: 400px;
+   width: 100%; */
+	background-image: url("../assets/map.webp");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .graph_img {
@@ -21,16 +26,16 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	transition: all 0.3s ease;
+	transition: all 1s ease;
 	background-color: red;
 	border-radius: 50%;
 	box-shadow: 0px 0px 10px 0 rgba(24, 24, 24, 0.5);
 }
 
-.plotter{
+.plotter {
 	position: absolute;
 	/* transform: translate(-50%, -50%); */
-	transition: all 0.3s ease;
+	transition: all 1.5s ease;
 	background-color: blue;
 	/* border-radius: 50%; */
 	box-shadow: 0px 0px 10px 0 rgba(24, 24, 24, 0.5);

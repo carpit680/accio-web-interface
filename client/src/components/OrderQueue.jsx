@@ -24,7 +24,7 @@ function OrderQueue() {
 				{orders.length > 0 ? (
 					orders.map((order) => {
 						return (
-							<li className='pending-list-item'>
+							<li className='pending-list-item' key={order}>
 								Order ID: <p>{order}</p>
 							</li>
 						);

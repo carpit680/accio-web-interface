@@ -6,70 +6,54 @@ import Robot from "../assets/pointer.svg";
 import React, { Component } from "react";
 import io from "socket.io-client";
 import "./graph.css";
-// import $ from "jquery";
+import $ from "jquery";
 
 const socket = io();
 
-// const [robot, setRobot] = useState([
-// 	{
-// 		x: 40,
-// 		y: 40,
-// 	},
-// ]);
-// useEffect(() => {
-// 	socket.on("robot:state", (msg) => {
-// 		$(document).ready(function () {
-// 			const graph = document.getElementsByClassName("graph_img");
-// 			const graphRect = graph[0].getBoundingClientRect();
-// 			const graphLeft = graphRect.left;
-// 			// $(".robot1").css({
-// 			// 	top: robot.y + 23 + graphRect.top,
-// 			// 	left: robot.x + 15 + graphRect.left,
-// 			// });
-// 			setRobot({
-// 				x: msg.x + 15 + graphRect.left,
-// 				y: msg.y + 23 + graphRect.top,
-// 			});
-// 		});
-// 	});
-// }, []);
-
-// $(".robot1").css({
-// 	top: robot.y,
-// 	left: robot.x,
-// });
-
-// return (
-// 	<div>
-// 		<Graph />
-// 		<img className='robot1' src={Robot} alt='robot' />
-// 	</div>
-// );
-
-socket.on("robot:state", (msg) => {
-	console.log(msg);
-});
 class Warehouse extends Component {
-	// Create state
+	componentDidMount() {
+		
+		// get graph position
+		const graph = $(".graph");
+		const graphRect = graph[0].getBoundingClientRect();
+		this.setState({ graphLeft: graphRect.left });
+		this.setState({ graphTop: graphRect.top });
+		this.setState({ graphWidth: graphRect.right - graphRect.left });
+		this.setState({ graphHeight: graphRect.bottom - graphRect.top });
+		this.setState({ prevx: graphRect.right - graphRect.left });
+		this.setState({ prevy: graphRect.bottom - graphRect.top });
+		socket.on("robot:state", (msg) => {
+			this.setState({ newX: graphRect.left + msg.position.x });
+			this.setState({ newY: graphRect.top + msg.position.y });
+			console.log(this.state.newX);
+		});
+	}
+
 	state = {
-		xoffset: 50,
-		yoffset: 50,
+		graphWidth: 0,
+		graphHeight: 0,
+		graphLeft: 0,
+		graphTop: 0,
 		delta: 1,
 		prevx: 0,
 		prevy: 0,
+		x: 0,
+		y: 0,
+		newY: 0,
+		newX: 0,
 	};
 
 	moveTitleToDown = () => {
-		this.setState({ yoffset: this.state.yoffset + this.state.delta });
+		this.setState({ y: this.state.newY });
 	};
 	moveTitleToRight = () => {
-		this.setState({ xoffset: this.state.xoffset + this.state.delta });
+		this.setState({ x: this.state.newX });
 	};
 	moveTitleToLeft = () => {
-		this.setState({ xoffset: this.state.xoffset - this.state.delta });
+		this.setState({ x: this.state.newX });
 	};
 	moveTitleToUp = () => {
-		this.setState({ yoffset: this.state.yoffset - this.state.delta });
+		this.setState({ y: this.state.newY });
 	};
 
 	render() {
@@ -80,8 +64,8 @@ class Warehouse extends Component {
 					<img
 						style={{
 							position: "fixed",
-							left: `${this.state.xoffset}%`,
-							top: `${this.state.yoffset}%`,
+							left: `${this.state.newX}px`,
+							top: `${this.state.newY}px`,
 						}}
 						className='robot1'
 						src={Robot}
@@ -89,7 +73,7 @@ class Warehouse extends Component {
 					/>
 				</div>
 				{/* Move Controls */}
-				<div style={{ marginTop: "80px" }}>
+				<div>
 					<button onClick={this.moveTitleToRight}>Move Title To Right</button>
 					<button onClick={this.moveTitleToDown}>Move Title To Down</button>
 					<button onClick={this.moveTitleToLeft}>Move Title To Left</button>

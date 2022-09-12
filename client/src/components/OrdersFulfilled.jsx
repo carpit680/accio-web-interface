@@ -24,7 +24,7 @@ function OrderFulfilled() {
 				{orders.length > 0 ? (
 					orders.map((order) => {
 						return (
-							<li className='fulfilled-list-item'>
+							<li className='fulfilled-list-item' key={order}>
 								Order ID: <p>{order}</p>
 							</li>
 						);
