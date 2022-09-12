@@ -19,13 +19,18 @@ function OrderFulfilled() {
 	return (
 		<div className='fulfilled'>
 			<h1 className='fulfilled-heading'>Fulfilled Order(s)</h1>
+			<br/>
 			<ul className='fulfilled-list'>
 				{orders.length > 0 ? (
 					orders.map((order) => {
-						return <li className='fulfilled-list-item'>{order}</li>;
+						return (
+							<li className='fulfilled-list-item'>
+								Order ID: <p>{order}</p>
+							</li>
+						);
 					})
 				) : (
-					<li className='fulfilled-list-item'>None</li>
+					<li className='fulfilled-list-item'>No completed orders. </li>
 				)}
 			</ul>
 		</div>

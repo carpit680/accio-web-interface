@@ -26,7 +26,7 @@ function RobotsList() {
 			<h1 className="list-heading">Online robots</h1>
 			<ul>
 				<li className="list-item" key={robot.robot_id}>
-					<h2>Robot {robot.robot_id}</h2>
+					<h2>Robot ID: {robot.robot_id}</h2>
 					<p>Available: {robot.available ? "Yes" : "No"}</p>
 				</li>
 				{/* <li className="list-item" key={2}>

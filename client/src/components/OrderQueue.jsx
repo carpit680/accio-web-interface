@@ -18,14 +18,19 @@ function OrderQueue() {
 
 	return (
 		<div className='pending'>
-			<h1 className="pending-heading">Pending Order(s)</h1>
+			<h1 className='pending-heading'>Pending Order(s)</h1>
+			<br />
 			<ul className='pending-list'>
 				{orders.length > 0 ? (
 					orders.map((order) => {
-						return <li className='pending-list-item'>{order}</li>;
+						return (
+							<li className='pending-list-item'>
+								Order ID: <p>{order}</p>
+							</li>
+						);
 					})
 				) : (
-					<li className='pending-list-item'>None</li>
+					<li className='pending-list-item'>No pending orders</li>
 				)}
 			</ul>
 		</div>

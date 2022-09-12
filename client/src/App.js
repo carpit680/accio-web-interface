@@ -29,7 +29,9 @@ function App() {
 			socket.off("disconnect");
 		};
 	}, []);
-
+	window.onbeforeunload = function (e) {
+		socket.disconnect();
+	};
 	const startSim = (e) => {
 		e.preventDefault();
 		socket.emit("sim:start", !start);
