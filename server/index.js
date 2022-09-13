@@ -40,6 +40,7 @@ nodePending.createSubscription(
 		for (var i = 0; i < msg.orders.length; i++) {
 			order_list.push(msg.orders[i]);
 		}
+		// console.log("Pending orders: " + order_list[0].orderid);
 		io.sockets.emit("orders:pending", order_list);
 	}
 );
@@ -55,13 +56,14 @@ nodeFulfilled.createSubscription(
 	}
 );
 
+
 rclnodejs.spin(nodeSim);
 rclnodejs.spin(nodeRobot);
 rclnodejs.spin(nodePending);
 rclnodejs.spin(nodeFulfilled);
 
 io.on("connection", (socket) => {
-	console.log("client connected: ", socket.id);
+	// console.log("client connected: ", socket.id);
 
 	startSimHandler(io, socket, sim_pub);
 
@@ -69,7 +71,7 @@ io.on("connection", (socket) => {
 		console.log(`connect_error due to ${err.message}`);
 	});
 	socket.on("disconnect", () => {
-		console.log("client disconnected: ", socket.id);
+		// console.log("client disconnected: ", socket.id);
 		nodeSim.destroy();
 		nodeRobot.destroy();
 		nodePending.destroy();

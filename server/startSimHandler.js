@@ -7,9 +7,6 @@ function startSimHandler(socketio, socket, sim_pub) {
 	};
 
 	socket.on("sim:start", startSim);
-	socket.on("disconnect", () => {
-		console.log("client disconnected: ", socket.id);
-	});
 }
 
 export default startSimHandler;
