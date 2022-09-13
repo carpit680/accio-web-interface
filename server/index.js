@@ -24,18 +24,23 @@ const sim_pub = nodeSim.createPublisher(
 );
 
 nodeRobot.createSubscription("accio_interfaces/msg/Robot", "robot", (msg) => {
-	io.sockets.emit("robot:state", msg);
+	var robot_list = [];
+	for (var i = 0; i < msg.robot_list.length; i++) {
+		robot_list.push(msg.robot_list[i]);
+	}
+	console.log("Robot list: " + robot_list);
+	io.sockets.emit("robot:state", robot_list);
 });
 
 nodePending.createSubscription(
 	"accio_interfaces/msg/Orders",
 	"orders_queued",
 	(msg) => {
-		var array = [];
+		var order_list = [];
 		for (var i = 0; i < msg.orders.length; i++) {
-			array.push(msg.orders[i]);
+			order_list.push(msg.orders[i]);
 		}
-		io.sockets.emit("orders:pending", array);
+		io.sockets.emit("orders:pending", order_list);
 	}
 );
 nodeFulfilled.createSubscription(
@@ -72,11 +77,7 @@ io.on("connection", (socket) => {
 	});
 });
 
-
 httpServer.listen(PORT, (err) => {
 	if (err) console.log(err);
 	console.log("Server running on Port ", PORT);
 });
-
-
-

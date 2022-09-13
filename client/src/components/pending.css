@@ -25,19 +25,38 @@
 	width: 100%;
 }
 .pending-list {
-	/* overflow-y: auto; */
+	font-size: 0.5rem;
 }
 
 .pending-list-item {
-	padding: 5px;
 	margin: 7px;
 	color: rgb(90, 90, 90) !important;
 	display: flex;
+	flex-direction: row;
 	justify-content: space-around;
 	border-bottom: 1px solid #ccc;
-	padding: 0 0.7rem;
+	padding: 0 0.4rem;
 }
 
 .pending-list-item p {
+	text-align: center;
+}
+
+.pending-order-heading {
 	font-weight: bold;
+	text-align: center;
+}
+.pending-tote-list {
+	/* display in a single line */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.pending-tote {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
 }

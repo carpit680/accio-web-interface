@@ -2,7 +2,6 @@
 
 import Graph from "./graph";
 import Robot from "../assets/pointer.svg";
-// import React, { useState, useEffect } from "react";
 import React, { Component } from "react";
 import io from "socket.io-client";
 import "./graph.css";
@@ -11,8 +10,10 @@ import $ from "jquery";
 const socket = io();
 
 class Warehouse extends Component {
+	scale = (number, outMin, outMax) => {
+		return ((number - 0) * (outMax - outMin)) / (100 - 0) + outMin;
+	};
 	componentDidMount() {
-		
 		// get graph position
 		const graph = $(".graph");
 		const graphRect = graph[0].getBoundingClientRect();
@@ -23,20 +24,20 @@ class Warehouse extends Component {
 		this.setState({ prevx: graphRect.right - graphRect.left });
 		this.setState({ prevy: graphRect.bottom - graphRect.top });
 		socket.on("robot:state", (msg) => {
-			this.setState({ newX: graphRect.left + msg.position.x });
-			this.setState({ newY: graphRect.top + msg.position.y });
-			console.log(this.state.newX);
+			this.setState({
+				newX:
+					graphRect.left + this.scale(msg.position.x, 0, this.state.graphWidth),
+			});
+			this.setState({
+				newY:
+					graphRect.top + this.scale(msg.position.y, 0, this.state.graphHeight),
+			});
 		});
 	}
 
 	state = {
 		graphWidth: 0,
 		graphHeight: 0,
-		graphLeft: 0,
-		graphTop: 0,
-		delta: 1,
-		prevx: 0,
-		prevy: 0,
 		x: 0,
 		y: 0,
 		newY: 0,
@@ -59,26 +60,17 @@ class Warehouse extends Component {
 	render() {
 		return (
 			<div>
-				<div>
-					<Graph />
-					<img
-						style={{
-							position: "fixed",
-							left: `${this.state.newX}px`,
-							top: `${this.state.newY}px`,
-						}}
-						className='robot1'
-						src={Robot}
-						alt='robot'
-					/>
-				</div>
-				{/* Move Controls */}
-				<div>
-					<button onClick={this.moveTitleToRight}>Move Title To Right</button>
-					<button onClick={this.moveTitleToDown}>Move Title To Down</button>
-					<button onClick={this.moveTitleToLeft}>Move Title To Left</button>
-					<button onClick={this.moveTitleToUp}>Move Title To Up</button>
-				</div>
+				<Graph />
+				<img
+					style={{
+						position: "fixed",
+						left: `${this.state.newX}px`,
+						top: `${this.state.newY}px`,
+					}}
+					className='robot1'
+					src={Robot}
+					alt='robot'
+				/>
 			</div>
 		);
 	}
