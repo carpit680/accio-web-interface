@@ -22,10 +22,10 @@ class Warehouse extends Component {
 		socket.on("robot:state", (msg) => {
 			this.setState({ graphLeft: graphRect.left });
 			this.setState({ graphTop: graphRect.top });
-			this.setState({ graphWidth: graphRect.width });
-			this.setState({ graphHeight: graphRect.height });
-			this.setState({ graphScalex: graphRect.width / 100 });
-			this.setState({ graphScaley: graphRect.height / 100 });
+			this.setState({ graphWidth: graphRect.width -30});
+			this.setState({ graphHeight: graphRect.height-30 });
+			this.setState({ graphScalex: (graphRect.width -30)/ 100 });
+			this.setState({ graphScaley: (graphRect.height -30)/ 100 });
 			if (msg.robot_id === 0) {
 				if (msg.position.x > this.state.prevx) {
 					this.setState({
