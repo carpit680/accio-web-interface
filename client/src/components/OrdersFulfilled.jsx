@@ -11,7 +11,6 @@ function OrderFulfilled() {
 
 	useEffect(() => {
 		socket.on("orders:fulfilled", (msg) => {
-			console.log(msg);
 			setFulfilled(msg);
 		});
 	}, []);

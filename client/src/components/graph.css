@@ -36,3 +36,110 @@
 	background-color: blue;
 	box-shadow: 0px 0px 10px 0 rgba(24, 24, 24, 0.5);
 }
+
+.graph .node {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	background-color: rgb(218, 218, 255);
+	border-radius: 50%;
+	box-shadow: 0px 0px 10px 0 rgba(24, 24, 24, 0.5);
+	width: 10px;
+	height: 10px;
+}
+
+/* [
+        {1.0: {
+            "x": 10.0,
+            "y": 20.0,
+        }},
+        {2.0: {
+            "x": 30.0,
+            "y": 10.0,
+        }},
+        {3.0: {
+            "x": 80.0,
+            "y": 30.0,
+        }},
+        {4.0: {
+            "x": 50.0,
+            "y": 50.0,
+        }},
+        {5.0: {
+            "x": 40.0,
+            "y": 70.0,
+        }},
+        {6.0: {
+            "x": 70.0,
+            "y": 80.0,
+        }},
+        {7.0: {
+            "x": 90.0,
+            "y": 90.0,
+        }},
+        {8.0: {
+            "x": 20.0,
+            "y": 90.0,
+        }},
+        {9.0: {
+            "x": 10.0,
+            "y": 10.0,
+        }},
+        {10.0: {
+            "x": 30.0,
+            "y": 30.0,
+        }},
+    ] */
+
+.n1{
+	top: 10%;
+	left: 20%;
+}
+.n2{
+	top: 30%;
+	left: 10%;
+}
+.n3{
+	top: 80%;
+	left: 30%;
+}
+.n4{
+	top: 50%;
+	left: 50%;
+}
+.n5{
+	top: 40%;
+	left: 70%;
+}
+.n6{
+	top: 70%;
+	left: 80%;
+}
+.n7{
+	top: 90%;
+	left: 90%;
+}
+.n8{
+	top: 20%;
+	left: 90%;
+}
+.n9{
+	top: 10%;
+	left: 10%;
+}
+.n10{
+	top: 30%;
+	left: 30%;
+}
+
+.station{
+	position: absolute;
+	transform: translate(-50%, -50%);
+	background-color: rgb(218, 218, 255);
+	border-radius: 10%;
+	box-shadow: 0px 0px 10px 0 rgba(24, 24, 24, 0.5);
+	width: 20px;
+	height: 20px;
+	top: 100%;
+	left: 50%;
+	background-color: black;
+}
