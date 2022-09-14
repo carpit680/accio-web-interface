@@ -24,12 +24,12 @@ const sim_pub = nodeSim.createPublisher(
 );
 
 nodeRobot.createSubscription("accio_interfaces/msg/Robot", "robot", (msg) => {
-	var robot_list = [];
-	for (var i = 0; i < msg.robot_list.length; i++) {
-		robot_list.push(msg.robot_list[i]);
-	}
-	console.log("Robot list: " + robot_list);
-	io.sockets.emit("robot:state", robot_list);
+	// var robot_list = [];
+	// for (var i = 0; i < msg.robot_list.length; i++) {
+	// 	robot_list.push(msg.robot_list[i]);
+	// }
+	// console.log("Robot list: " + robot_list);
+	io.sockets.emit("robot:state", msg);
 });
 
 nodePending.createSubscription(
@@ -40,7 +40,7 @@ nodePending.createSubscription(
 		for (var i = 0; i < msg.orders.length; i++) {
 			order_list.push(msg.orders[i]);
 		}
-		// console.log("Pending orders: " + order_list[0].orderid);
+
 		io.sockets.emit("orders:pending", order_list);
 	}
 );

@@ -13,19 +13,21 @@ function OrderQueue() {
 		// reset orders
 
 		socket.on("orders:pending", (msg) => {
-			var orders = []
-			for (var j = 0; j < msg.length; j++) {
-				var pick_list = [];
-				for (var i = 0; i < msg[0].picklist.length; i++) {
-					pick_list.push(msg[0].picklist[i]);
-				}
-				var order = {
-					orderid: msg[j].orderid,
-					picklist: pick_list,
-				}
-				orders.push(order);
-			}
-			setPending(orders);
+			// var orders = []
+			// for (var j = 0; j < msg.length; j++) {
+			// 	var pick_list = [];
+			// 	for (var i = 0; i < msg[j].picklist.length; i++) {
+			// 		pick_list.push(msg[j].picklist[i]);
+			// 		console.log("hello");
+			// 	}
+			// 	var order = {
+			// 		orderid: msg[j].orderid,
+			// 		picklist: pick_list,
+			// 	}
+			// 	orders.push(order);
+			// }
+			// console.log(orders[0]);
+			setPending(msg);
 		});
 	}, []);
 
@@ -42,7 +44,7 @@ function OrderQueue() {
 									<h3 className='pending-order-heading'> Order ID</h3>{" "}
 									{order.orderid}
 								</>
-								<h2 className='pending-order-heading'>Pick list</h2>
+								{/* <h2 className='pending-order-heading'>Pick list</h2>
 								<ul className='pending-tote-list'>
 									{order.picklist.forEach(toteid => {
 										console.log(toteid);
@@ -52,7 +54,7 @@ function OrderQueue() {
 											</li>
 										);
 									})}
-								</ul>
+								</ul> */}
 							</li>
 						);
 					})
