@@ -24,13 +24,13 @@ class Warehouse extends Component {
 		this.setState({ graphScalex: (graphRect.width - 46) / 100 });
 		this.setState({ graphScaley: (graphRect.height -46) / 100 });
 		
-		socket.on("robot:state", (msg) => {
+		socket.on("robot:state", (msg, robot_id_list) => {
 			this.setState({ graphLeft: graphRect.left + 15 });
-			this.setState({ graphTop: graphRect.top + 15 });
-			this.setState({ graphWidth: graphRect.width - 46 });
-			this.setState({ graphHeight: graphRect.height - 46 });
-			this.setState({ graphScalex: (graphRect.width - 46) / 100 });
-			this.setState({ graphScaley: (graphRect.height - 46) / 100 });
+		this.setState({ graphTop: graphRect.top + 15 });
+		this.setState({ graphWidth: graphRect.width - 46 });
+		this.setState({ graphHeight: graphRect.height -46 });
+		this.setState({ graphScalex: (graphRect.width - 46) / 100 });
+		this.setState({ graphScaley: (graphRect.height -46) / 100 });
 			if (msg.robot_id === 0) {
 				if (msg.position.x > this.state.prevx) {
 					this.setState({

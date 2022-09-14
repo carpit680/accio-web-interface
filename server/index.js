@@ -22,14 +22,12 @@ const sim_pub = nodeSim.createPublisher(
 	"std_msgs/msg/Bool",
 	"start_simulation"
 );
-
+var robot_id_list = [];
 nodeRobot.createSubscription("accio_interfaces/msg/Robot", "robot", (msg) => {
-	// var robot_list = [];
-	// for (var i = 0; i < msg.robot_list.length; i++) {
-	// 	robot_list.push(msg.robot_list[i]);
-	// }
-	// console.log("Robot list: " + robot_list);
-	io.sockets.emit("robot:state", msg);
+	if (!robot_id_list.includes(msg.robot_id)) {
+		robot_id_list.push(msg.robot_id);
+	}
+	io.sockets.emit("robot:state", msg, robot_id_list);
 });
 
 nodePending.createSubscription(
@@ -45,14 +43,14 @@ nodePending.createSubscription(
 	}
 );
 nodeFulfilled.createSubscription(
-	"accio_interfaces/msg/Orders",
+	"accio_interfaces/msg/OrdersFulfilled",
 	"orders_fulfilled",
 	(msg) => {
-		var array = [];
+		var order_list = [];
 		for (var i = 0; i < msg.orders.length; i++) {
-			array.push(msg.orders[i]);
+			order_list.push(msg.orders[i]);
 		}
-		io.sockets.emit("orders:fulfilled", array);
+		io.sockets.emit("orders:fulfilled", order_list);
 	}
 );
 
@@ -70,13 +68,13 @@ io.on("connection", (socket) => {
 	socket.on("connect_error", (err) => {
 		console.log(`connect_error due to ${err.message}`);
 	});
-	socket.on("disconnect", () => {
+	// socket.on("disconnect", () => {
 		// console.log("client disconnected: ", socket.id);
-		nodeSim.destroy();
-		nodeRobot.destroy();
-		nodePending.destroy();
-		nodeFulfilled.destroy();
-	});
+		// nodeSim.destroy();
+		// nodeRobot.destroy();
+		// nodePending.destroy();
+		// nodeFulfilled.destroy();
+	// });
 });
 
 httpServer.listen(PORT, (err) => {

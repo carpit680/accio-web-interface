@@ -9,15 +9,24 @@ const socket = io();
 
 function RobotsList() {
 	const [robot, setRobot] = useState([
-		{
-			robot_id: 0,
-			available: false,
-		},
+		
+			[{
+				robot_id: 0,
+				available: false,
+			}],
 	]);
 
 	useEffect(() => {
-		socket.on("robot:state", (msg) => {
-			setRobot(msg);
+		socket.on("robot:state", (msg, robot_id_list) => {
+			var robots = [];
+			for (var i = 0; i < robot_id_list.length; i++) {
+				var robot = {
+					robot_id: robot_id_list[i],
+					available: msg[i],
+				};
+				robots.push(robot);
+			}
+			setRobot(robots);
 		});
 	}, []);
 
@@ -25,14 +34,14 @@ function RobotsList() {
 		<div className="robot-list">
 			<h1 className="list-heading">Online robots</h1>
 			<ul>
-				<li className="list-item" key={robot.robot_id}>
-					<h2>Robot ID: {robot.robot_id}</h2>
-					<p>Available: {robot.available ? "Yes" : "No"}</p>
-				</li>
-				{/* <li className="list-item" key={2}>
-					<h2></h2>
-					<p>Available: NA</p>
-				</li> */}
+				{robot.map((robo) => {
+					return (
+						<li className='list-item' key={robo.robot_id}>
+							<h2>Robot ID: {robo.robot_id}</h2>
+							<p>Available: {robo.available ? "Yes" : "No"}</p>
+						</li>
+					);
+				}) }
 			</ul>
 		</div>
 	);

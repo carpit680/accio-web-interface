@@ -38,15 +38,20 @@ function OrderQueue() {
 			<ul className='pending-list'>
 				{orders.length > 0 ? (
 					orders.map((order) => {
+						var pick_list = [];
+						for (var i = 0; i < order.picklist.length; i++) {
+							pick_list.push(order.picklist[i]);
+						}
+						console.log(order)
 						return (
 							<li key={order.orderid} className='pending-list-item'>
 								<>
 									<h3 className='pending-order-heading'> Order ID</h3>{" "}
 									{order.orderid}
 								</>
-								{/* <h2 className='pending-order-heading'>Pick list</h2>
+								<h2 className='pending-order-heading'>Pick list</h2>
 								<ul className='pending-tote-list'>
-									{order.picklist.forEach(toteid => {
+									{pick_list.forEach(toteid => {
 										console.log(toteid);
 										return (
 											<li key={toteid} className='pending-tote'>
@@ -54,7 +59,7 @@ function OrderQueue() {
 											</li>
 										);
 									})}
-								</ul> */}
+								</ul>
 							</li>
 						);
 					})
