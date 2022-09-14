@@ -17,20 +17,15 @@ class Warehouse extends Component {
 		// get graph position
 		const graph = $(".graph");
 		const graphRect = graph[0].getBoundingClientRect();
-		this.setState({ graphLeft: graphRect.left + 15 });
-		this.setState({ graphTop: graphRect.top + 15 });
-		this.setState({ graphWidth: graphRect.width - 46 });
-		this.setState({ graphHeight: graphRect.height -46 });
-		this.setState({ graphScalex: (graphRect.width - 46) / 100 });
-		this.setState({ graphScaley: (graphRect.height -46) / 100 });
 		
-		socket.on("robot:state", (msg, robot_id_list) => {
-			this.setState({ graphLeft: graphRect.left + 15 });
-		this.setState({ graphTop: graphRect.top + 15 });
-		this.setState({ graphWidth: graphRect.width - 46 });
-		this.setState({ graphHeight: graphRect.height -46 });
-		this.setState({ graphScalex: (graphRect.width - 46) / 100 });
-		this.setState({ graphScaley: (graphRect.height -46) / 100 });
+		
+		socket.on("robot:state", (msg) => {
+			this.setState({ graphLeft: graphRect.left });
+			this.setState({ graphTop: graphRect.top });
+			this.setState({ graphWidth: graphRect.width });
+			this.setState({ graphHeight: graphRect.height });
+			this.setState({ graphScalex: graphRect.width / 100 });
+			this.setState({ graphScaley: graphRect.height / 100 });
 			if (msg.robot_id === 0) {
 				if (msg.position.x > this.state.prevx) {
 					this.setState({
@@ -71,8 +66,8 @@ class Warehouse extends Component {
 		graphHeight: 0,
 		prevx: 0,
 		prevy: 0,
-		newY: 433,
-		newX: 794,
+		newY: 100,
+		newX: 300,
 		graphScalex: 0,
 		graphScaley: 0,
 		degrees: 0,
